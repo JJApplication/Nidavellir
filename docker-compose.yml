@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # etcd服务
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.10
+    container_name: nidavellir-etcd
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    environment:
+      - ETCD_NAME=etcd0
+      - ETCD_DATA_DIR=/etcd-data
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://localhost:2379
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://localhost:2380
+      - ETCD_INITIAL_CLUSTER=etcd0=http://localhost:2380
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster-1
+      - ETCD_INITIAL_CLUSTER_STATE=new
+      - ALLOW_NONE_AUTHENTICATION=yes
+    volumes:
+      - etcd-data:/etcd-data
+    networks:
+      - nidavellir-network
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nidavellir配置中心
+  nidavellir:
+    build: .
+    container_name: nidavellir-config-center
+    ports:
+      - "8080:8080"  # HTTP端口
+      - "9090:9090"  # gRPC端口
+    environment:
+      - ETCD_ENDPOINTS=etcd:2379
+    depends_on:
+      etcd:
+        condition: service_healthy
+    networks:
+      - nidavellir-network
+    volumes:
+      - ./configs:/app/configs:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # etcd管理界面（可选）
+  etcd-manager:
+    image: evildecay/etcdkeeper:latest
+    container_name: nidavellir-etcd-manager
+    ports:
+      - "8081:8080"
+    environment:
+      - ETCD_HOST=etcd
+      - ETCD_PORT=2379
+    depends_on:
+      - etcd
+    networks:
+      - nidavellir-network
+    restart: unless-stopped
+
+volumes:
+  etcd-data:
+    driver: local
+
+networks:
+  nidavellir-network:
+    driver: bridge

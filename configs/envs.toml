@@ -1,0 +1,20 @@
+[[service]]
+name = "1"
+
+[[service.envs]]
+key = "1"
+val = "1"
+
+[[service]]
+name = "2"
+
+[[service.envs]]
+key = "2"
+val = "2"
+
+[[service]]
+name = ""
+
+[[service.envs]]
+key = ""
+val = ""

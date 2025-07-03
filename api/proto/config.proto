@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package config;
+
+option go_package = "nidavellir/api/proto/config";
+
+// ConfigService 配置服务
+service ConfigService {
+  // SetConfig 设置配置
+  rpc SetConfig(SetConfigRequest) returns (SetConfigResponse);
+  
+  // GetConfig 获取配置
+  rpc GetConfig(GetConfigRequest) returns (GetConfigResponse);
+  
+  // GetServiceConfigs 获取服务所有配置
+  rpc GetServiceConfigs(GetServiceConfigsRequest) returns (GetServiceConfigsResponse);
+  
+  // DeleteConfig 删除配置
+  rpc DeleteConfig(DeleteConfigRequest) returns (DeleteConfigResponse);
+  
+  // DeleteServiceConfigs 删除服务所有配置
+  rpc DeleteServiceConfigs(DeleteServiceConfigsRequest) returns (DeleteServiceConfigsResponse);
+  
+  // ListServices 列出所有服务
+  rpc ListServices(ListServicesRequest) returns (ListServicesResponse);
+  
+  // WatchConfig 监听配置变化
+  rpc WatchConfig(WatchConfigRequest) returns (stream WatchConfigResponse);
+}
+
+// SetConfigRequest 设置配置请求
+message SetConfigRequest {
+  string service_name = 1;
+  string key = 2;
+  string value = 3;
+  string description = 4;
+}
+
+// SetConfigResponse 设置配置响应
+message SetConfigResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// GetConfigRequest 获取配置请求
+message GetConfigRequest {
+  string service_name = 1;
+  string key = 2;
+}
+
+// GetConfigResponse 获取配置响应
+message GetConfigResponse {
+  ConfigItem config = 1;
+  bool found = 2;
+}
+
+// GetServiceConfigsRequest 获取服务配置请求
+message GetServiceConfigsRequest {
+  string service_name = 1;
+}
+
+// GetServiceConfigsResponse 获取服务配置响应
+message GetServiceConfigsResponse {
+  map<string, ConfigItem> configs = 1;
+}
+
+// DeleteConfigRequest 删除配置请求
+message DeleteConfigRequest {
+  string service_name = 1;
+  string key = 2;
+}
+
+// DeleteConfigResponse 删除配置响应
+message DeleteConfigResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// DeleteServiceConfigsRequest 删除服务配置请求
+message DeleteServiceConfigsRequest {
+  string service_name = 1;
+}
+
+// DeleteServiceConfigsResponse 删除服务配置响应
+message DeleteServiceConfigsResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// ListServicesRequest 列出服务请求
+message ListServicesRequest {}
+
+// ListServicesResponse 列出服务响应
+message ListServicesResponse {
+  repeated string services = 1;
+}
+
+// WatchConfigRequest 监听配置请求
+message WatchConfigRequest {
+  string service_name = 1;
+  string key = 2; // 可选，如果为空则监听整个服务
+}
+
+// WatchConfigResponse 监听配置响应
+message WatchConfigResponse {
+  string event_type = 1; // PUT, DELETE
+  ConfigItem config = 2;
+}
+
+// ConfigItem 配置项
+message ConfigItem {
+  string key = 1;
+  string value = 2;
+  string service_name = 3;
+  string description = 4;
+  int64 created_at = 5;
+  int64 updated_at = 6;
+}

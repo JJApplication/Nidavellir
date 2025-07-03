@@ -1,0 +1,23 @@
+# Nidavellir 配置中心配置文件
+
+# HTTP服务器配置
+[http]
+host = "0.0.0.0"
+port = 8080
+
+# gRPC服务器配置
+[grpc]
+host = "0.0.0.0"
+port = 9090
+
+# etcd配置
+[etcd]
+endpoints = ["localhost:2379"]
+dial_timeout = 5
+username = ""
+password = ""
+
+# 日志配置
+[log]
+level = "info"
+format = "json"
