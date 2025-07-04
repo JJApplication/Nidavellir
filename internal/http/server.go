@@ -87,7 +87,7 @@ func (s *Server) healthCheck(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":    "ok",
 		"timestamp": time.Now().Unix(),
-		"service":   "nidavellir",
+		"service":   "Nidavellir",
 	})
 }
 

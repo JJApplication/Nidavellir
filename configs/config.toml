@@ -2,13 +2,20 @@
 
 # HTTP服务器配置
 [http]
-host = "0.0.0.0"
-port = 8080
+host = "127.0.0.1"
+port = 9990
+enable = false
 
 # gRPC服务器配置
 [grpc]
-host = "0.0.0.0"
-port = 9090
+host = "127.0.0.1"
+port = 9991
+enable = false
+
+# twig配置
+[twig]
+address = "/renj.io/uds/Nidavellir.sock"
+enable = true
 
 # etcd配置
 [etcd]

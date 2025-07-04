@@ -9,20 +9,28 @@ import (
 type Config struct {
 	HTTP HTTPConfig `mapstructure:"http"`
 	GRPC GRPCConfig `mapstructure:"grpc"`
+	Twig TwigConfig `mapstructure:"twig"`
 	Etcd EtcdConfig `mapstructure:"etcd"`
 	Log  LogConfig  `mapstructure:"log"`
 }
 
 // HTTPConfig HTTP服务器配置
 type HTTPConfig struct {
-	Port int    `mapstructure:"port"`
-	Host string `mapstructure:"host"`
+	Port   int    `mapstructure:"port"`
+	Host   string `mapstructure:"host"`
+	Enable bool   `mapstructure:"enable"`
 }
 
 // GRPCConfig gRPC服务器配置
 type GRPCConfig struct {
-	Port int    `mapstructure:"port"`
-	Host string `mapstructure:"host"`
+	Port   int    `mapstructure:"port"`
+	Host   string `mapstructure:"host"`
+	Enable bool   `mapstructure:"enable"`
+}
+
+type TwigConfig struct {
+	Address string `mapstructure:"address"`
+	Enable  bool   `mapstructure:"enable"`
 }
 
 // EtcdConfig etcd配置
