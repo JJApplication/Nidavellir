@@ -34,6 +34,7 @@ message SetConfigRequest {
   string key = 2;
   string value = 3;
   string description = 4;
+  bool encrypt = 5;
 }
 
 // SetConfigResponse 设置配置响应
@@ -113,6 +114,7 @@ message ConfigItem {
   string value = 2;
   string service_name = 3;
   string description = 4;
-  int64 created_at = 5;
-  int64 updated_at = 6;
+  bool encrypt = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
 }

@@ -28,6 +28,7 @@ type SetConfigRequest struct {
 	Key           string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
 	Value         string                 `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Encrypt       bool                   `protobuf:"varint,5,opt,name=encrypt,proto3" json:"encrypt,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -88,6 +89,13 @@ func (x *SetConfigRequest) GetDescription() string {
 		return x.Description
 	}
 	return ""
+}
+
+func (x *SetConfigRequest) GetEncrypt() bool {
+	if x != nil {
+		return x.Encrypt
+	}
+	return false
 }
 
 // SetConfigResponse 设置配置响应
@@ -738,8 +746,9 @@ type ConfigItem struct {
 	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	ServiceName   string                 `protobuf:"bytes,3,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
 	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     int64                  `protobuf:"varint,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Encrypt       bool                   `protobuf:"varint,5,opt,name=encrypt,proto3" json:"encrypt,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     int64                  `protobuf:"varint,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -802,6 +811,13 @@ func (x *ConfigItem) GetDescription() string {
 	return ""
 }
 
+func (x *ConfigItem) GetEncrypt() bool {
+	if x != nil {
+		return x.Encrypt
+	}
+	return false
+}
+
 func (x *ConfigItem) GetCreatedAt() int64 {
 	if x != nil {
 		return x.CreatedAt
@@ -820,12 +836,13 @@ var File_api_proto_config_proto protoreflect.FileDescriptor
 
 const file_api_proto_config_proto_rawDesc = "" +
 	"\n" +
-	"\x16api/proto/config.proto\x12\x06config\"\x7f\n" +
+	"\x16api/proto/config.proto\x12\x06config\"\x99\x01\n" +
 	"\x10SetConfigRequest\x12!\n" +
 	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\tR\x05value\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\"G\n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x18\n" +
+	"\aencrypt\x18\x05 \x01(\bR\aencrypt\"G\n" +
 	"\x11SetConfigResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"G\n" +
@@ -862,17 +879,18 @@ const file_api_proto_config_proto_rawDesc = "" +
 	"\x13WatchConfigResponse\x12\x1d\n" +
 	"\n" +
 	"event_type\x18\x01 \x01(\tR\teventType\x12*\n" +
-	"\x06config\x18\x02 \x01(\v2\x12.config.ConfigItemR\x06config\"\xb7\x01\n" +
+	"\x06config\x18\x02 \x01(\v2\x12.config.ConfigItemR\x06config\"\xd1\x01\n" +
 	"\n" +
 	"ConfigItem\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value\x12!\n" +
 	"\fservice_name\x18\x03 \x01(\tR\vserviceName\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x1d\n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x18\n" +
+	"\aencrypt\x18\x05 \x01(\bR\aencrypt\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\x03R\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\x06 \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\x03R\tupdatedAt2\xb0\x04\n" +
+	"updated_at\x18\a \x01(\x03R\tupdatedAt2\xb0\x04\n" +
 	"\rConfigService\x12@\n" +
 	"\tSetConfig\x12\x18.config.SetConfigRequest\x1a\x19.config.SetConfigResponse\x12@\n" +
 	"\tGetConfig\x12\x18.config.GetConfigRequest\x1a\x19.config.GetConfigResponse\x12X\n" +
