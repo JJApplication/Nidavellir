@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"nidavellir/initializer"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"nidavellir/initializer"
 
 	"go.uber.org/zap"
 	"nidavellir/internal/grpc"
@@ -76,4 +77,5 @@ func main() {
 	grpcServer.GracefulStop()
 
 	glb.Logger.Info("Servers stopped")
+	glb.Logger.Sync()
 }

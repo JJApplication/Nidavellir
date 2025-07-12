@@ -1,20 +1,54 @@
 [[service]]
-name = "1"
-
+name = "Heimdallr"
 [[service.envs]]
-key = "1"
-val = "1"
+key = "UnixAddress"
+val = "/var/run/Heimdallr.sock"
+[[service.envs]]
+key = "Talker"
+val = "/var/run/OctopusTwig.sock"
+[[service.envs]]
+key = "ExtraApps"
+val = "dockered"
+[[service.envs]]
+key = "To"
+val = "liaorenj@gmail.com"
+[[service.envs]]
+key = "MongoName"
+val = "ApolloMongo"
+[[service.envs]]
+key = "MongoURL"
+val = "mongodb://localhost:27017"
+[[service.envs]]
+key = "JobSystemCheck"
+val = "disable"
+[[service.envs]]
+key = "JobSysLoopCheck"
+val = "disable"
+[[service.envs]]
+key = "JobAppLoopCheck"
+val = "disable"
+
 
 [[service]]
-name = "2"
-
+name = "Palace"
 [[service.envs]]
-key = "2"
-val = "2"
-
-[[service]]
-name = ""
-
+key = "Host"
+val = "127.0.0.1"
 [[service.envs]]
-key = ""
+key = "Port"
+val = "22222"
+[[service.envs]]
+key = "UploadPath"
+val = "images"
+[[service.envs]]
+key = "UploadSize"
+val = "1024"
+[[service.envs]]
+key = "UploadPrefix"
+val = "/images"
+[[service.envs]]
+key = "PalaceCode"
+val = ""
+[[service.envs]]
+key = "AESKey"
 val = ""

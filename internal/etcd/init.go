@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"go.uber.org/zap"
 	"nidavellir/internal/config"
 )
@@ -17,6 +18,7 @@ func InitServiceEnvs(envs *config.EnvConfig, client *Client, logger *zap.Logger)
 
 	data, err := client.GetWithPrefix(ctx, ConfigPrefix)
 	if err != nil {
+		logger.Error("fail to get config", zap.Error(err))
 		return
 	}
 

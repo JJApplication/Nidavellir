@@ -14,7 +14,7 @@ enable = false
 
 # twig配置
 [twig]
-address = "/renj.io/uds/Nidavellir.sock"
+address = "/var/run/Nidavellir.sock"
 enable = true
 
 # etcd配置

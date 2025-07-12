@@ -12,7 +12,6 @@ func InitializeEtcd(glb *Global) {
 	if err != nil {
 		glb.Logger.Fatal("Failed to create etcd client", zap.Error(err))
 	}
-	defer etcdClient.Close()
 
 	InitializeEnvs(glb.EnvCfg, etcdClient, glb.Logger)
 	service := InitializeService(etcdClient, glb.Logger)
